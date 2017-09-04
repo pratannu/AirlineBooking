@@ -4,6 +4,7 @@ import airline.model.City;
 import airline.model.Flight;
 import airline.repositories.CityRepository;
 import airline.services.FlightSearchService;
+import airline.viewModels.FlightSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,20 +18,21 @@ import java.util.*;
 public class FlightSearchController {
     CityRepository cityRepository;
     @Autowired
-    FlightSearchService flightSearchService;
+    FlightSearchCriteria flightSearchCriteria;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getCities(Model model) {
         cityRepository = new CityRepository();
         List<City> cities = cityRepository.getCities();
         model.addAttribute("cities", cities);
-        model.addAttribute("searchCriteria", new FlightSearchService());
+        model.addAttribute("searchCriteria", new FlightSearchCriteria());
         return "FlightSearch";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String getFlights(@ModelAttribute(value = "searchCriteria") FlightSearchService searchCriteria, Model model) {
-        List<Flight> availableFlights = searchCriteria.search();
+    public String getFlights(@ModelAttribute(value = "searchCriteria") FlightSearchCriteria searchCriteria, Model model) {
+        FlightSearchService flightSearch = new FlightSearchService(searchCriteria);
+        List<Flight> availableFlights = flightSearch.search();
         model.addAttribute("searchResults",availableFlights);
         return "FlightsList";
     }
