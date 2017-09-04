@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flight Search</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+</head>
+<body>
+<div class="container">
+    <p th:text="'Welcome to TWAirline'"/>
+
+    <form method="post" th:action="@{/search}" th:object="${searchCriteria}">
+        <div class="form-group">
+            <select title="Source" class="form-control" id="source" name="source" th:field="*{source}">
+                <option value="">Select Source</option>
+                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}" ></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="destination" name="destination" th:field="*{destination}">
+                <option value="">Select Destination</option>
+                <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="number" th:field="*{numberOfSeats}" min="1" max="500" class="form-control"/>
+        </div>
+
+
+        <!-- New Code Starts here -->
+         <div class="form-group">
+            <input type = "date" th:field="*{departureDate}"  class="form-control" min="2017-09-04" max="2017-10-30"/>
+         </div>
+
+            <input type="submit" class="form-control" value="Search"/>
+    </form>
+</div>
+</body>
+</html>
