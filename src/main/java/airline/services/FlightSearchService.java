@@ -57,13 +57,23 @@ public class FlightSearchService {
         this.numberOfSeats = numberOfSeats;
     }
 
+    private boolean compareRoute(Flight flight){
+        return source.equals(flight.getSource()) && destination.equals(flight.getDestination());
+    }
 
+    private boolean checkSeatAvailability(Flight flight){
+        return flight.getAvailableSeats()>=numberOfSeats;
+    }
+
+    private boolean checkDepartureDate(Flight flight){
+        return departureDate.isEqual(flight.getDepartureDate());
+    }
     public List<Flight> search() {
         flightRepository = new FlightRepository();
         List<Flight> availableFlights = new ArrayList<Flight>();
 
         for (Flight flight : flightRepository.getFlights()) {
-            if (source.equals(flight.getSource()) && destination.equals(flight.getDestination()) && flight.getAvailableSeats()>=numberOfSeats && departureDate.isEqual(flight.getDepartureDate()))
+            if (compareRoute(flight) && checkSeatAvailability(flight) && checkDepartureDate(flight))
                 availableFlights.add(flight);
         }
         return availableFlights;
