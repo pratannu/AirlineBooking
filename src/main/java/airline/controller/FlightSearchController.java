@@ -2,7 +2,9 @@ package airline.controller;
 
 import airline.model.City;
 import airline.model.Flight;
+import airline.model.TravelClass;
 import airline.repositories.CityRepository;
+import airline.repositories.FlightRepository;
 import airline.services.FlightSearchService;
 import airline.viewModels.FlightSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,18 @@ import java.util.*;
 
 public class FlightSearchController {
     CityRepository cityRepository;
+    Flight flight;
+
     @Autowired
     FlightSearchCriteria flightSearchCriteria;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getCities(Model model) {
         cityRepository = new CityRepository();
+        flight = new Flight();
         List<City> cities = cityRepository.getCities();
         model.addAttribute("cities", cities);
+        model.addAttribute("travelclass", Arrays.asList(TravelClass.values()));
         model.addAttribute("searchCriteria", new FlightSearchCriteria());
         return "FlightSearch";
     }
@@ -34,6 +40,7 @@ public class FlightSearchController {
         FlightSearchService flightSearch = new FlightSearchService(searchCriteria);
         List<Flight> availableFlights = flightSearch.search();
         model.addAttribute("searchResults",availableFlights);
+        model.addAttribute("searchCriteria", searchCriteria);
         return "FlightsList";
     }
 

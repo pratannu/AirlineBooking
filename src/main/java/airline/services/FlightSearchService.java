@@ -13,12 +13,17 @@ public class FlightSearchService {
     private String destination;
     private LocalDate departureDate;
     private int numberOfSeats;
+    private String travelclass;
 
     public FlightSearchService(FlightSearchCriteria flightSearchCriteria) {
         this.source = flightSearchCriteria.getSource();
         this.destination = flightSearchCriteria.getDestination();
         this.numberOfSeats = flightSearchCriteria.getNumberOfSeats();
-        this.departureDate = LocalDate.parse(flightSearchCriteria.getDepartureDate());
+        if( flightSearchCriteria.getDepartureDate() == null)
+            this.departureDate = null;
+        else
+             this.departureDate = LocalDate.parse(flightSearchCriteria.getDepartureDate());
+        this.travelclass = flightSearchCriteria.getTravelclass();
     }
 
     private boolean compareRoute(Flight flight){
@@ -26,12 +31,16 @@ public class FlightSearchService {
     }
 
     private boolean checkSeatAvailability(Flight flight){
-        return flight.getAvailableSeats()>=numberOfSeats;
+        return flight.getSeatsByTravelClass(travelclass) >= numberOfSeats;
     }
 
     private boolean checkDepartureDate(Flight flight){
-        return departureDate.isEqual(flight.getDepartureDate());
+        if(departureDate == null)
+            return true;
+        else
+            return departureDate.isEqual(flight.getDepartureDate());
     }
+
     public List<Flight> search() {
         FlightRepository flightRepository = new FlightRepository();
         List<Flight> availableFlights = new ArrayList<Flight>();

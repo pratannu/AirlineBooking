@@ -12,11 +12,11 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th> #</th>
+            <th>Flight Number</th>
             <th>Source</th>
             <th>Destination</th>
-            <th>Available Seats</th>
             <th>Departure Date</th>
+            <th th:text="${searchCriteria.travelclass}"></th>
         </tr>
         </thead>
         <tbody>
@@ -24,8 +24,9 @@
             <td th:text="${flight.flightNumber}"/>
             <td th:text="${flight.source}"/>
             <td th:text="${flight.destination}"/>
-            <td th:text="${flight.availableSeats}"/>
             <td th:text ="${flight.departureDate}"/>
+            <td th:text ="${flight.getSeatsByTravelClass(searchCriteria.travelclass)}"/>
+
         </tr>
         </tbody>
     </table>

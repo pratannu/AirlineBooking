@@ -30,8 +30,23 @@
 
         <!-- New Code Starts here -->
          <div class="form-group">
-            <input type = "date" th:field="*{departureDate}"  class="form-control" min="2017-09-04" max="2017-12-31"/>
+            <input type = "date"  th:field="*{departureDate}"  class="form-control"/>
          </div>
+
+        <!--Code for Class for flight here-->
+         <div class="form-group">
+              <select class="form-control" id="travelclass" name="travelclass" th:field="*{travelclass}">
+                  <option value="">Select Travel Class</option>
+                  <option th:each="travelclass : ${travelclass}"
+                          th:value = "${travelclass}"
+                          th:text = "${travelclass}">
+
+                  </option>
+              </select>
+
+
+        </div>
+
 
             <input type="submit" class="form-control" value="Search"/>
     </form>
