@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Null;
 import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class FlightSearchCriteria {
@@ -13,14 +14,23 @@ public class FlightSearchCriteria {
     private int numberOfSeats;
     private final int DEFAULT_NUMBER_OF_SEAT = 1;
     private LocalDate departureDate;
+
+    public List getPlaneNames() {
+        return planeNames;
+    }
+
+    public void setPlaneNames(List planeNames) {
+        this.planeNames = planeNames;
+    }
+
     private String travelclass;
+    private List planeNames;
 
        FlightRepository flightRepository;
 
     public FlightSearchCriteria() {
         this.numberOfSeats = DEFAULT_NUMBER_OF_SEAT;
-//        this.departureDate =   LocalDate.now();
-        //this.travelclass = travelclass;
+
     }
 
 
