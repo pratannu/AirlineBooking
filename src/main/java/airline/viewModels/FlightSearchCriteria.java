@@ -23,10 +23,18 @@ public class FlightSearchCriteria {
         this.planeNames = planeNames;
     }
 
-    private String travelclass;
+    private String travelClass;
     private List planeNames;
 
        FlightRepository flightRepository;
+
+    public String getTravelClass() {
+        return travelClass;
+    }
+
+    public void setTravelClass(String travelClass) {
+        this.travelClass = travelClass;
+    }
 
     public FlightSearchCriteria() {
         this.numberOfSeats = DEFAULT_NUMBER_OF_SEAT;
@@ -72,11 +80,5 @@ public class FlightSearchCriteria {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public String getTravelclass() {
-        return travelclass;
-    }
 
-    public void setTravelclass(String travelclass) {
-        this.travelclass = travelclass;
-    }
 }

@@ -16,7 +16,7 @@
             <th>Source</th>
             <th>Destination</th>
             <th>Departure Date</th>
-            <th th:text="${searchCriteria.travelclass}"></th>
+            <th th:inline="text">[[${searchCriteria.travelClass}]]   CLASS</th>
             <th>Price</th>
 
         </tr>
@@ -27,8 +27,8 @@
             <td th:text="${flight.source}"/>
             <td th:text="${flight.destination}"/>
             <td th:text ="${flight.departureDate}"/>
-            <td th:text ="${flight.getSeatsByTravelClass(searchCriteria.travelclass)}"/>
-            <td th:text ="${flight.calculatePrice(searchCriteria.travelclass, searchCriteria.numberOfSeats)}"/>
+            <td th:text ="${flight.getSeatsByTravelClass(searchCriteria.travelClass)}"/>
+            <td th:text ="${flight.calculatePrice(searchCriteria.travelClass, searchCriteria.numberOfSeats)}"/>
 
 
         </tr>

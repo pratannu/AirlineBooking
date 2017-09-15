@@ -3,6 +3,7 @@ package airline.services;
 import airline.model.Flight;
 import airline.repositories.FlightRepository;
 import airline.viewModels.FlightSearchCriteria;
+import airline.model.TravelClass;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class FlightSearchService {
     private String destination;
     private LocalDate departureDate;
     private int numberOfSeats;
-    private String travelclass;
+    private String travelClass;
 
     public FlightSearchService(FlightSearchCriteria flightSearchCriteria) {
         this.source = flightSearchCriteria.getSource();
@@ -23,7 +24,7 @@ public class FlightSearchService {
             this.departureDate = null;
         else
              this.departureDate = LocalDate.parse(flightSearchCriteria.getDepartureDate());
-        this.travelclass = flightSearchCriteria.getTravelclass();
+        this.travelClass = flightSearchCriteria.getTravelClass();
     }
 
     private boolean compareRoute(Flight flight){
@@ -31,7 +32,7 @@ public class FlightSearchService {
     }
 
     private boolean checkSeatAvailability(Flight flight){
-        return flight.getSeatsByTravelClass(travelclass) >= numberOfSeats;
+        return flight.getSeatsByTravelClass(travelClass) >= numberOfSeats;
     }
 
     private boolean checkDepartureDate(Flight flight){
@@ -46,7 +47,7 @@ public class FlightSearchService {
         List<Flight> availableFlights = new ArrayList<Flight>();
 
         for (Flight flight : flightRepository.getFlights()) {
-            if (compareRoute(flight) && checkSeatAvailability(flight) && checkDepartureDate(flight))
+            if (compareRoute(flight) && checkSeatAvailability(flight) && checkDepartureDate(flight) && flight.checkIsOpen(travelClass, departureDate))
                 availableFlights.add(flight);
         }
         return availableFlights;

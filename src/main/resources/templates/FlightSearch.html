@@ -30,16 +30,16 @@
 
         <!-- New Code Starts here -->
          <div class="form-group">
-            <input type = "date"  th:field="*{departureDate}"  class="form-control"/>
+            <input type = "date"  th:field="*{departureDate}"  class="form-control" th:required="required"/>
          </div>
 
         <!--Code for Class for flight here-->
          <div class="form-group">
-              <select class="form-control" id="travelclass" name="travelclass" th:field="*{travelclass}">
+              <select class="form-control" id="travelClass" name="travelClass" th:field="*{travelClass}" th:required="required">
                   <option value="">Select Travel Class</option>
-                  <option th:each="travelclass : ${travelclass}"
-                          th:value = "${travelclass}"
-                          th:text = "${travelclass}">
+                  <option th:each="travelClass : ${travelClass}"
+                          th:value = "${travelClass}"
+                          th:text = "${travelClass}">
 
                   </option>
               </select>

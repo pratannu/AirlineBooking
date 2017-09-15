@@ -3,6 +3,7 @@ package airline.controller;
 import airline.model.City;
 import airline.model.Flight;
 import airline.model.TravelClass;
+import airline.repositories.AirPlaneRepository;
 import airline.repositories.CityRepository;
 import airline.repositories.FlightRepository;
 import airline.services.FlightSearchService;
@@ -33,7 +34,7 @@ public class FlightSearchController {
         flight = new Flight();
         List<City> cities = cityRepository.getCities();
         model.addAttribute("cities", cities);
-        model.addAttribute("travelclass", Arrays.asList(TravelClass.values()));
+        model.addAttribute("travelClass", Arrays.asList(TravelClass.values()));
         model.addAttribute("airplane", Arrays.asList(new AirPlane().getPlaneName()));
         model.addAttribute("searchCriteria", new FlightSearchCriteria());
         return "FlightSearch";
@@ -42,9 +43,12 @@ public class FlightSearchController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String getFlights(@ModelAttribute(value = "searchCriteria") FlightSearchCriteria searchCriteria, Model model) {
         FlightSearchService flightSearch = new FlightSearchService(searchCriteria);
+        AirPlaneRepository airPlaneRepository = new AirPlaneRepository();
+
         List<Flight> availableFlights = flightSearch.search();
         model.addAttribute("searchResults",availableFlights);
         model.addAttribute("searchCriteria", searchCriteria);
+        model.addAttribute("airplane", airPlaneRepository.getPlaneName(airplane.toString()));
         return "FlightsList";
     }
 
